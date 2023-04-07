@@ -24,9 +24,10 @@ EUR_CASH_DATA = [
 
 def add_eur_cash_data(apps, schema_editor):
     Cash = apps.get_model('app', 'Cash')
-    cash_data = []
-    for cash_type, value in EUR_CASH_DATA:
-        cash_data.append(Cash(cash_type=cash_type, value=value))
+    cash_data = [
+        Cash(cash_type=cash_type, value=value)
+        for cash_type, value in EUR_CASH_DATA
+    ]
     Cash.objects.bulk_create(cash_data)
 
 

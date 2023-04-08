@@ -1,0 +1,5 @@
+#!/bin/bash
+
+docker-compose up -d
+docker-compose exec app /usr/local/bin/pytest tirelire/app/tests.py
+docker-compose down

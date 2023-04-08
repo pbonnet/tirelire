@@ -11,13 +11,17 @@ schema_view = get_schema_view(
       default_version='v1',
       description=(
         """
-        Moneybox API documentation to present different endpoints to manage moneyboxes.
-        You will be able to:
-        - Create a moneybox
-        - List the moneyboxes
-        - Shake a moneybox to get the list of money in it
-        - Save money in a moneybox by inserting coins or bills
-        - Break a moneybox to get the money back and destroy the moneybox
+        Moneybox API documentation pour la gestion de tirelires et de leurs richesse.
+        Grâce à ces APIs vous avez la possibilité de:
+        - Créer une tireline avec l'endpoint: POST /moneyboxes/
+        - Lister les tirelires avec l'endpoint: GET /moneyboxes/
+        - Retrouver les informations basiques d'une tirelire avec l'endpoint: GET /moneyboxes/{id}/
+        - Secouer une tirelire pour y savoir son contenu et votre richesse avec l'endpoint: GET /moneyboxes/{id}/shake/
+        - Épargner de la monnaie dans une tirelire avec l'endpoint: GET /moneyboxes/{id}/shake/
+        - Casser une tirelire avec l'endpoint: GET /moneyboxes/{id}/break/
+
+        La monnaie est limitée à de la monnaie avec pièces et billets de la devise Euro.
+        Casser une tirelire retourna son contenu et votre richesse finale, après ça elle ne sera plus utilisable.
         """
       ),
       contact=openapi.Contact(email="jesuispaulbonnet@gmail.com"),

@@ -19,12 +19,17 @@ class MoneyBoxContentSerializer(serializers.ModelSerializer):
         model = MoneyBoxContent
         fields = ['cash_type', 'currency', 'value', 'amount']
 
-    def validate(self, data):
+    def validate(self, data: dict) -> dict:
         """
-        Check that start is before finish.
+        Validating the cash data given before it gets serialized.
+        Args:
+            data (dict): The cash data.
+        Returns:
+            dict: The cash data validated.
         """
         cash_data = data['cash']
         if Cash.find_from_type_and_value(cash_data['cash_type'], cash_data['value']) is None:
+            # Return API error when the cash value does not exist
             raise serializers.ValidationError(
                 {"cashes": f"The {cash_data['cash_type']} with the value {cash_data['value']} does not exist."}
             )

@@ -12,7 +12,7 @@ schema_view = get_schema_view(
       description=(
         """
         Moneybox API documentation pour la gestion de tirelires et de leurs richesse.
-        Grâce à ces APIs vous avez la possibilité de:
+        Grâce à cette API vous avez la possibilité de:
         - Créer une tireline avec l'endpoint: POST /moneyboxes/
         - Lister les tirelires avec l'endpoint: GET /moneyboxes/
         - Retrouver les informations basiques d'une tirelire avec l'endpoint: GET /moneyboxes/{id}/

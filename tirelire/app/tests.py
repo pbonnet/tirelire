@@ -143,6 +143,29 @@ class MoneyBoxSaveTestCase(APITestCase):
         self.assertEqual(response.data['cashes'][2]['value'], '100.00')
         self.assertEqual(response.data['cashes'][2]['amount'], 2)
 
+    def test_save_moneybox_with_cash_defined_twice(self):
+        """
+        Test saving cash in a money box with cash defined twice and check the wealth data in the API's response
+        """
+        self.payload['cashes'].append({
+            'cash_type': 'coin',
+            'value': '2',
+            'amount': 2
+        })
+        response = self.client.post(self.get_url(self.moneybox.id), self.payload, format='json')
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data['wealth'], '207.00')
+        self.assertEqual(len(response.data['cashes']), 3)
+        self.assertEqual(response.data['cashes'][0]['cash_type'], 'coin')
+        self.assertEqual(response.data['cashes'][0]['value'], '0.20')
+        self.assertEqual(response.data['cashes'][0]['amount'], 5)
+        self.assertEqual(response.data['cashes'][1]['cash_type'], 'coin')
+        self.assertEqual(response.data['cashes'][1]['value'], '2.00')
+        self.assertEqual(response.data['cashes'][1]['amount'], 3)
+        self.assertEqual(response.data['cashes'][2]['cash_type'], 'bill')
+        self.assertEqual(response.data['cashes'][2]['value'], '100.00')
+        self.assertEqual(response.data['cashes'][2]['amount'], 2)
+
     def test_save_moneybox_not_found(self):
         """Test saving cash in a money box not found should return an error."""
         response = self.client.post(self.get_url(111), self.payload, format='json')

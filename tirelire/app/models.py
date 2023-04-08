@@ -103,7 +103,7 @@ class MoneyBox(models.Model):
         Returns:
             None
         """
-        existing_moneybox_contents = self.moneyboxcontent_set.select_related('cash').all()
+        existing_moneybox_contents = list(self.moneyboxcontent_set.select_related('cash').all())
         for cash_to_add in cashes_to_add:
             cash_object = Cash.find_from_type_and_value(cash_to_add['cash_type'], cash_to_add['value'])
             existing_moneybox_content = next(
@@ -117,9 +117,9 @@ class MoneyBox(models.Model):
                 existing_moneybox_content.amount += cash_to_add['amount']
                 existing_moneybox_content.save()
             else:
-                self.moneyboxcontent_set.add(
-                    MoneyBoxContent(cash=cash_object, amount=cash_to_add['amount']), bulk=False
-                )
+                new_money_box = MoneyBoxContent(cash=cash_object, amount=cash_to_add['amount'])
+                self.moneyboxcontent_set.add(new_money_box, bulk=False)
+                existing_moneybox_contents.append(new_money_box)
         self.save()
 
     def break_moneybox(self) -> None:

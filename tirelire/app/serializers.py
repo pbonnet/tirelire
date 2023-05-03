@@ -37,7 +37,7 @@ class MoneyBoxContentSerializer(serializers.ModelSerializer):
 
 
 class MoneyBoxWealthSerializer(serializers.ModelSerializer):
-    wealth = serializers.DecimalField(max_digits=10, decimal_places=2)
+    wealth = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     cashes = MoneyBoxContentSerializer(many=True, source='moneyboxcontent_set_ordered')
 
     class Meta:
